@@ -61,8 +61,12 @@ describe('main.ts', () => {
   })
 
   it('Sets a failed status', async () => {
-    // Clear the getInput mock and return an empty prompt
-    core.getInput.mockClear().mockReturnValueOnce('')
+    // Clear the getInput mock and simulate no prompt or prompt-file input
+    core.getInput.mockImplementation((name) => {
+      if (name === 'prompt') return ''
+      if (name === 'prompt-file') return ''
+      return ''
+    })
 
     await run()
 

@@ -47,6 +47,7 @@ the action:
 | `model`         | The model to use for inference. Must be available in the [GitHub Models](https://github.com/marketplace?type=models) catalog          | `gpt-4o`                             |
 | `endpoint`      | The endpoint to use for inference. If you're running this as part of an org, you should probably use the org-specific Models endpoint | `https://models.github.ai/inference` |
 | `max-tokens`    | The max number of tokens to generate                                                                                                  | 200                                  |
+| `prompt-file`   | The name of a file whose content will be used as the prompt                                                                           | `""`                                 |
 
 ## Outputs
 

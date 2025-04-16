@@ -11,7 +11,7 @@ branding:
 inputs:
   prompt:
     description: The prompt for the model
-    required: true
+    required: false
     default: ''
   model:
     description: The model to use
@@ -33,6 +33,10 @@ inputs:
     description: The token to use
     required: false
     default: ${{ github.token }}
+  prompt-file:
+    description: The name of a file whose content will be used as the prompt
+    required: false
+    default: ''
 
 # Define your outputs here.
 outputs:

@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import ModelClient, { isUnexpected } from '@azure-rest/ai-inference'
 import { AzureKeyCredential } from '@azure/core-auth'
+import * as fs from 'fs'
 
 /**
  * The main function for the action.
@@ -9,7 +10,16 @@ import { AzureKeyCredential } from '@azure/core-auth'
  */
 export async function run(): Promise<void> {
   try {
-    const prompt: string = core.getInput('prompt')
+    const promptFile: string = core.getInput('prompt-file')
+    let prompt: string = core.getInput('prompt')
+
+    if (promptFile) {
+      if (!fs.existsSync(promptFile)) {
+        throw new Error(`Prompt file not found: ${promptFile}`)
+      }
+      prompt = fs.readFileSync(promptFile, 'utf-8')
+    }
+
     if (prompt === undefined || prompt === '') {
       throw new Error('prompt is not set')
     }
