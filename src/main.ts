@@ -68,6 +68,11 @@ export async function run(): Promise<void> {
     const modelResponse: string | null =
       response.body.choices[0].message.content
 
+    // Save the response to a file
+    if (modelResponse && modelResponse !== '') {
+      fs.writeFileSync('response.txt', modelResponse, 'utf-8')
+    }
+
     // Set outputs for other workflow steps to use
     core.setOutput('response', modelResponse || '')
   } catch (error) {
