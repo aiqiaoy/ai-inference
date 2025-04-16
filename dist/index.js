@@ -33558,7 +33558,7 @@ async function run() {
     try {
         const promptFile = coreExports.getInput('prompt-file');
         let prompt = coreExports.getInput('prompt');
-        if (promptFile) {
+        if (promptFile !== undefined && promptFile !== '') {
             if (!require$$1.existsSync(promptFile)) {
                 throw new Error(`Prompt file not found: ${promptFile}`);
             }

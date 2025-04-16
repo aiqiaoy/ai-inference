@@ -13,7 +13,7 @@ export async function run(): Promise<void> {
     const promptFile: string = core.getInput('prompt-file')
     let prompt: string = core.getInput('prompt')
 
-    if (promptFile) {
+    if (promptFile !== undefined && promptFile !== '') {
       if (!fs.existsSync(promptFile)) {
         throw new Error(`Prompt file not found: ${promptFile}`)
       }
