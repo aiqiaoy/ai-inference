@@ -42,6 +42,8 @@ inputs:
 outputs:
   response:
     description: The response from the model
+  response-path:
+    description: The file path where the response was saved
 
 runs:
   using: node20

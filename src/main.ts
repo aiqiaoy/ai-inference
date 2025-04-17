@@ -2,6 +2,10 @@ import * as core from '@actions/core'
 import ModelClient, { isUnexpected } from '@azure-rest/ai-inference'
 import { AzureKeyCredential } from '@azure/core-auth'
 import * as fs from 'fs'
+import * as os from 'os'
+import * as path from 'path'
+
+const RESPONSE_FILE = 'modelResponse.txt'
 
 /**
  * The main function for the action.
@@ -68,9 +72,12 @@ export async function run(): Promise<void> {
     const modelResponse: string | null =
       response.body.choices[0].message.content
 
-    // Save the response to a file
+    // Save the response to a file in case the response overflow the output limit
+    const responseFilePath = path.join(tempDir(), RESPONSE_FILE)
+    core.setOutput('response-path', responseFilePath)
+
     if (modelResponse && modelResponse !== '') {
-      fs.writeFileSync('response.txt', modelResponse, 'utf-8')
+      fs.writeFileSync(responseFilePath, modelResponse, 'utf-8')
     }
 
     // Set outputs for other workflow steps to use
@@ -83,4 +90,9 @@ export async function run(): Promise<void> {
       core.setFailed('An unexpected error occurred')
     }
   }
+}
+
+function tempDir(): string {
+  const tempDirectory = process.env['RUNNER_TEMP'] || os.tmpdir()
+  return tempDirectory
 }
